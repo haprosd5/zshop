@@ -18,8 +18,8 @@
                </span>
             </a>
             <ul class="treeview-menu">
-               <li><a href="{{ url('admin/product/add') }}">Add Product</a></li>
-               <li><a href="{{url('/admin/product/')}}">View Product</a></li>
+               <li><a href="{{ route('product.create') }}">Add Product</a></li>
+               <li><a href="{{ route('product.index') }}">View Product</a></li>
             </ul>
          </li>
         

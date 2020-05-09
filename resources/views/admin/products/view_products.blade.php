@@ -28,21 +28,28 @@
                             <!-- Plugin content:powerpoint,txt,pdf,png,word,xl -->
                             <div class="btn-group">
                                 <div class="buttonexport" id="buttonlist">
-                                    <a class="btn btn-add" href="{{ url('admin/product/add') }}"> <i
+                                    <a class="btn btn-add" href="{{ route('product.create') }}"> <i
                                             class="fa fa-plus"></i> Add product
                                     </a>
                                 </div>
 
                             </div>
-                            <!-- Plugin content:powerpoint,txt,pdf,png,word,xl -->
+                            @if (Session::has('mess'))
+                                <div class="alert alert-danger" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">×</span></button>
+                                    <strong>Ui!</strong> {{ session('mess') }}
+                                </div>
+                            @endif
+                        <!-- Plugin content:powerpoint,txt,pdf,png,word,xl -->
                             <div class="table-responsive">
                                 <table id="table_id" class="table table-bordered table-striped table-hover">
                                     <thead>
                                     <tr class="info">
-                                        <th>Image</th>
                                         <th>Name</th>
                                         <th>Code</th>
                                         <th>Color</th>
+                                        <th>Image</th>
                                         <th>Price</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -51,18 +58,23 @@
                                     <tbody>
                                     @foreach($data as $item)
                                         <tr>
-                                            <td><img src="{{ asset('/upload/products/'. $item->image) }}"
-                                                     class="img-circle" alt="User Image" width="50" height="50"></td>
                                             <td>{{ $item->name }}</td>
                                             <td>{{ $item->code }}</td>
                                             <td>{{ $item->color }}</td>
+                                            <td>
+                                                @if(!empty($item->image))
+                                                    <img src="{{ asset('/upload/products/'. $item->image) }}"
+                                                         alt="User Image" width="100px">
+                                                @endif
+                                            </td>
                                             <td>{{ $item->price }}</td>
                                             <td><span class="label-custom label label-default">Active</span></td>
                                             <td>
-                                                <button type="button" class="btn btn-add btn-sm" data-toggle="modal"
-                                                        data-target="#customer1"><i class="fa fa-pencil"></i></button>
-                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"
-                                                        data-target="#customer2"><i class="fa fa-trash-o"></i></button>
+                                                <a type="button" class="btn btn-add btn-sm" data-toggle="modal"
+                                                   data-target="#customer1"><i class="fa fa-pencil"></i></a>
+                                                <a href="{{ url('admin/product/'. $item->id) }}" type="button"
+                                                   class="btn btn-danger btn-sm" data-toggle="modal"
+                                                   data-target="#customer2"><i class="fa fa-trash-o"></i></a>
                                             </td>
                                         </tr>
 

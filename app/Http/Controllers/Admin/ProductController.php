@@ -14,6 +14,7 @@ class ProductController extends Controller
         $data['data'] = Product::all();
         return view('admin.products.view_products', $data);
     }
+
     public function create()
     {
         return view('admin.products.addproduct');
@@ -23,7 +24,7 @@ class ProductController extends Controller
     {
         $temp = $request->all();
         /*them san pham*/
-        $product = new Product();
+        $product = new Product;
         $product->name = $temp['product_name'];
         $product->code = $temp['product_code'];
         $product->color = $temp['product_color'];
@@ -36,31 +37,35 @@ class ProductController extends Controller
         /*tai anh len*/
         if ($request->hasFile('picture')) {
             $image_tmp = $request->picture;
-            $file_name = time() . '.'.$image_tmp->clientExtension();
-            $img_part = 'upload/products/'.$file_name;
-            Image::make($image_tmp)->resize(500, 500)->save($img_part);
+            $file_name = time() . '.' . $image_tmp->clientExtension();
+            $img_part = 'upload/products/' . $file_name;
+            Image::make($image_tmp)->resize(300, 500)->rotate(90)->save($img_part);
             $product->image = $file_name;
             $product->save();
         } else {
-            return redirect('admin/product/add')->with('mess', 'Ban tai anh len bi loi');
+            return redirect('admin/product/create')->with('mess', 'Ban tai anh len bi loi');
         }
-        return redirect('admin/product/add')->with('mess', 'Ban da them thanh cong mot san pham');
+        return redirect('admin/product/create')->with('mess', 'Ban da them thanh cong mot san pham');
     }
 
     public function show(Product $product)
     {
         //
     }
+
     public function edit(Product $product)
     {
         //
     }
+
     public function update(Request $request, Product $product)
     {
         //
     }
+
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect()->route('product.index')->with('mess', 'Ban da xoa thanh cong mot san pham');
     }
 }

@@ -20,19 +20,19 @@
             <div class="panel panel-bd lobidrag">
                <div class="panel-heading">
                   <div class="btn-group" id="buttonlist"> 
-                     <a class="btn btn-add " href="{{url('/admin/product/')}}">
+                     <a class="btn btn-add " href="{{ route('product.index') }}">
                         <i class="fa fa-list"></i>  Product List </a>  
                      </div>
                   </div>
                   <div class="panel-body">
-                      @if (Session::has('error'))
+                      @if (Session::has('mess'))
                           <div class="alert alert-danger alert-dismissible" role="alert">
                               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                       aria-hidden="true">×</span></button>
                               <strong>Ui!</strong> {{ session('mess') }}
                           </div>
                       @endif
-                     <form class="col-sm-6" action="{{ url('/admin/product/add') }}" method="post" enctype="multipart/form-data">
+                     <form class="col-sm-6" action="{{ route('product.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                            <label>Product Name</label>
@@ -61,9 +61,7 @@
                         </div>
                         
                         <div class="form-check">
-                          
                            <div class="reset-button">
-                              {{-- <a href="#" class="btn btn-warning">Reset</a> --}}
                               <button class="btn btn-success">Save</button>
                            </div>
                         </div>
